@@ -8,6 +8,7 @@ venv/
 env/
 *.env
 meet/
+
 # Streamlit
 .streamlit/
 
@@ -24,3 +25,7 @@ Thumbs.db
 
 # Temporary files
 *.tmp
+
+# Folders to ignore
+chroma_db/
+records/
