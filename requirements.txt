@@ -1,0 +1,14 @@
+numpy
+pandas
+streamlit
+streamlit_webrtc
+
+scikit-learn
+sentence_transformers
+
+av
+
+python-dotenv
+SpeechRecognition 
+google.generativeai
+moviepy 
