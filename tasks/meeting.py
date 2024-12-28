@@ -7,7 +7,7 @@ from tasks.utils import get_meeting_summary_chain, process_text, vector_store, e
 from pathlib import Path
 import json
 import numpy as np
-from typing import Dict, List, Tuple
+from typing import Dict
 
 def initialize_whisper():
     return whisper.load_model("base")

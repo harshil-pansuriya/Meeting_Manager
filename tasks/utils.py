@@ -6,8 +6,6 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains import LLMChain
 import chromadb
 from dotenv import load_dotenv
-import shutil
-from pathlib import Path
 
 chunk_size = 200
 chunk_overlap = 50
@@ -25,11 +23,8 @@ def initialize_llm():
 
 def initialize_chroma():
     persist_dir = "./data/chroma"
-    
-    # Create fresh directory if it doesn't exist
     os.makedirs(persist_dir, exist_ok=True)
     
-    # Initialize client with new settings
     client = chromadb.PersistentClient(
         path=persist_dir,
         settings=chromadb.Settings(
@@ -37,27 +32,14 @@ def initialize_chroma():
             allow_reset=True
         )
     )
-    
-    # Reset the database instead of deleting files
     client.reset()
-    
-    # Create collection with metadata
-    collection = client.get_or_create_collection(
-        name="meeting_content",
-        metadata={"hnsw:space": "cosine"}
-    )
+    collection = client.get_or_create_collection( name="meeting_content",metadata={"hnsw:space": "cosine"})
     
     return collection
 
 def initialize_text_processing():
-    embeddings = HuggingFaceEmbeddings(
-        model_name=embedding_model,
-        model_kwargs={'device': 'cpu'}
-    )
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=chunk_size,
-        chunk_overlap=chunk_overlap
-    )
+    embeddings = HuggingFaceEmbeddings(model_name=embedding_model,model_kwargs={'device': 'cpu'})
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size,chunk_overlap=chunk_overlap)
     return embeddings, text_splitter
 
 # Initialize components
