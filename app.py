@@ -1,41 +1,47 @@
 import streamlit as st
-from tasks import agenda, meeting, upload_doc,live_meeting, QnA
+from tasks import agenda, meeting, upload_doc,QnA
+from config.path_handler import create_directories
+import os
+import yaml
+from pathlib import Path
 
-         
-# -------   ------------- Main Function -------------------- #
-def main():
-    
-    st.title("Meeting Management Tool")
-    
-    # Create tabs for different stages of meeting management
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["Upload Documents", "Discussion Points & Agenda", "Start Meeting", "Upload Video","QnA"])
-    
-    # Content for each tab
-    with tab1:
-        uploaded_files = upload_doc.upload_documents()
-        if uploaded_files:
-            if st.button("Process Uploaded Documents"):
-                QnA.process_uploaded_documents(uploaded_files)
-    
-    with tab2:
-        agenda.discussion_points_and_generate_agenda()
+def load_config():
+    config_path = Path("config/config.yaml")
+    with open(config_path) as f:
+        return yaml.safe_load(f)
+
+def setup_page(config):
+    st.set_page_config(page_title=config['app']['title'],layout=config['app']['layout'])
+
+def display_readme():
+    readme_path = Path("README.md")
+    if readme_path.exists():
+        st.markdown(readme_path.read_text())
+    else:
+        st.error("README.md not found")
         
-    with tab3:
-        st.title('Live Meeting Tracker and Transcriber')  
-        live_meeting.live_meeting_tracker()
+# ---------------------- Main Function -------------------- #
+def main():
+    """Main application entry point."""
+    create_directories()
+    config = load_config()
+    setup_page(config)
     
-    with tab4:
-        st.title('Recorded Meeting Transcriber and Notes Generator')
-        meeting.track_meeting()
+    st.title(config['app']['title'])
     
-    with tab5:
-        st.title('Context-Aware Q&A System')
-        query = st.text_input("Ask a question about the meeting or related topics:")
-        if query:
-            with st.spinner("Generating answer..."):
-                answer = QnA.qna(query)
-            st.write("Answer:", answer)
-            
-# Entry point of the script
+    tabs = st.tabs([
+        "README",
+        "Upload Documents & Points",
+        "Generate Agenda",
+        "Meeting Records",
+        "QnA"
+    ])
+    
+    with tabs[0]: display_readme()
+    with tabs[1]: upload_doc.upload_documents()
+    with tabs[2]: agenda.create_agenda()
+    with tabs[3]: meeting.track_meeting()
+    with tabs[4]: QnA.answer_questions()
+   
 if __name__ == "__main__":
     main()

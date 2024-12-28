@@ -29,3 +29,7 @@ Thumbs.db
 # Folders to ignore
 chroma_db/
 records/
+
+#files
+1.txt
+ex.py

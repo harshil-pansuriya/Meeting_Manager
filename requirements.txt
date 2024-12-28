@@ -1,14 +1,36 @@
+# Core Streamlit and WebRTC
+streamlit
+streamlit-webrtc==0.47.1
+aiortc==1.5.0
+av==10.0.0
+aioice==0.9.0
+typing-extensions==4.8.0
+
+# Audio/Video Processing
+moviepy
+opencv-python-headless
+openai-whisper
+pydub
+
+# Document Processing
+PyPDF2
+python-docx
+
+# AI/ML Stack
+langchain
+langchain-core
+langchain-community
+langchain-google-genai
+google-generativeai
+sentence-transformers
+transformers
+torch
+
+# Vector Store
+chromadb==0.4.18
+
+# Utilities
+python-dotenv
+pyyaml
 numpy
 pandas
-streamlit
-streamlit_webrtc
-
-scikit-learn
-sentence_transformers
-
-av
-
-python-dotenv
-SpeechRecognition 
-google.generativeai
-moviepy 

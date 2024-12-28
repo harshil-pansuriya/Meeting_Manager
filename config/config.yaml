@@ -1,0 +1,30 @@
+app:
+  title: "Meeting Management Tool"
+  layout: "wide"
+
+database:
+  chroma:
+    persist_directory: "./data/chroma"
+    collection_names:
+      documents: "documents"
+      discussions: "discussions"
+      meetings: "meetings"
+
+paths:
+  temp:
+    video: "./data/temp/video"
+    audio: "./data/temp/audio"
+
+models:
+  gemini:
+    model_name: "gemini-pro"
+  whisper:
+    model_name: "base"
+    language: "en"
+
+thresholds:
+  similarity: 0.6
+
+file_types:
+  video: ["mp4", "avi", "mov", "mkv"]
+  allowed_docs: ["pdf", "docx", "txt"]
